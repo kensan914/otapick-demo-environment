@@ -1,0 +1,1 @@
+cd /var/www/otapick;celery -A config worker -l info

@@ -1,0 +1,4 @@
+User-Agent:*
+Disallow:
+
+Sitemap:https://otapick.com/sitemap.xml/

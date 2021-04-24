@@ -1,0 +1,10 @@
+data
+*.swp
+\*Backtrace\*
+otapick
+src
+log
+.vscode
+*.code-workspace
+/.devcontainer
+otapick-venv/
