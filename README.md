@@ -23,16 +23,14 @@ $ vim .env
 ```
 ```
 SECRET_KEY=ucj1y2hviu26_^lzxp0n=ct-qvcp%5w%aih6r=-!$znlm$g(#+
-DEBUG=True
-#DEBUG=False
+DEBUG=False
 ALLOWED_HOSTS=127.0.0.1
-#ALLOWED_HOSTS=192.168.99.100
 
 DB_ENGINE=django.db.backends.mysql
 DB_CONN_MAX_AGE=3600
-DB_NAME=otapick
+DB_NAME=otapick_demo
 DB_USER=root
-DB_PASSWORD=gin-TK46
+DB_PASSWORD=mysql-password
 DB_HOST=db
 DB_PORT=3306
 DB_ATOMIC_REQUESTS=True
@@ -40,6 +38,10 @@ DB_ATOMIC_REQUESTS=True
 REDIS_URL=redis://redis:6379
 
 MEDIA_ROOT=/var/www/otapick/media
+
+CLIENT_SSL_CERT_PATH=
+CLIENT_SSL_KEY_PATH=
+CLIENT_SSL_PASSWORD=
 ```
 
 Build and up.

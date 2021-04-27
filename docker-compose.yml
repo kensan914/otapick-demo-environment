@@ -7,12 +7,12 @@ services:
       - ./mysql/data:/var/lib/mysql
       - ./mysql/my.cnf:/etc/mysql/conf.d/my.cnf
     ports:
-      - "3307:3306"
+      - "3309:3306"
     environment:
       TZ: "Asia/Tokyo"
-      MYSQL_ROOT_PASSWORD: 'gin-TK46'
-      MYSQL_DATABASE: otapick
-    container_name: otapick_db
+      MYSQL_ROOT_PASSWORD: 'mysql-password'
+      MYSQL_DATABASE: otapick_demo
+    container_name: otapick_demo_db
 
   nginx:
     build: ./nginx
@@ -23,11 +23,14 @@ services:
       - ./src:/var/www/otapick
       - ./python/site-packages:/etc/nginx/site-packages
       - ./nginx/static:/var/www/static
+      - ./nginx/conf.dev.d:/etc/nginx/conf.d
     links:
       - python
     environment:
       TZ: "Asia/Tokyo"
-    container_name: otapick_nginx
+    container_name: otapick_demo_nginx
+    ports:
+      - "9000:9000"
 
   python:
     build: ./python
@@ -38,26 +41,24 @@ services:
       - db
       - redis
     ports:
-      - "8001:8001"
-    container_name: otapick_python
+      - "9001:9001"
+    container_name: otapick_demo_python
+    command: uwsgi --ini /var/www/uwsgi.ini
 
   celery:
     build: ./python
-    command: bash -c "chmod 755 wait-for-it.sh start-celery.sh;./wait-for-it.sh db:3306 -- ./start-celery.sh"
-    volumes:
-      - ./python:/var/www
-      - ./src:/var/www/otapick
+    command: bash -c "./wait-for-it.sh db:3306 -- ./start-celery.sh"
     links:
       - python
       - redis
     depends_on:
       - db
     ports:
-      - "8002:8002"
+      - "9002:9002"
     tty: true
-    container_name: otapick_celery
+    container_name: otapick_demo_celery
 
   redis:
     image: redis:5.0.7
-    container_name: redis
+    container_name: otapick_demo_redis
     tty: true
