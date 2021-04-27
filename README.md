@@ -1,23 +1,99 @@
-# :whale:otapick_docker:whale2:
+# :whale:otapick-demo-environment:whale2:
 
 ## :deciduous_tree:Description
-This Docker allows us to easily build and share the development environment of otapick!!(personal use)
+[ヲタピック](https://otapick.com)のローカル上のデモ環境をDocker(docker-compose)で提供し、本readmeではその構築方法を記します。
 
-## :sunny:Usage
+デモ環境では最低限の機能のみ提供し、一部の機能(ユーザ認証等)に関してはセキュリティ上対応を見送っております。
+また、Windows HOMEのDocker toolboxをご使用されている環境では、127.0.0.1にアクセスできない関係で本構築方法は未対応となっております。ご理解の程よろしくお願いいたします。
 
-First, on any directory,
+A local demo environment of [otapick](https://otapick.com) is provided in Docker (docker-compose), and this readme describes how to build it.
+
+In the demo environment, only the minimum functionality is provided, and some functions (such as user authentication) are not supported for security reasons. Also, if you are using the Docker toolbox on Windows HOME, you will not be able to access 127.0.0.1, so this method is not supported. Thank you for your understanding.
+
+## :rainbow:Directory structure
+[ヲタピックのリポジトリ](https://github.com/kensan914/otapick)のディレクトリ構成を示します。
+
+The directory structure of [otapick repository](https://github.com/kensan914/otapick) is shown below.
+
+### backend
+Django Rest Framework(DRF)を使用したWeb APIになります。
+
+This is a Web API using Django Rest Framework (DRF).
 ```
-$ git clone https://github.com/kensan914/otapick_docker.git {任意のディレクトリ名}←以後「otapick」とする。
-$ cd otapick
+otapick/
+  ├ account/    # カスタムアカウント担当App
+  ├ api/    # modelを持たないview専用App
+  ├ config/    # 設定
+  ├ image/    # 画像担当App
+  ├ main/    # ブログ・グループ・メンバー担当App
+  ├ survey/    # アンケート担当App
+  ├ templates/    # Django template
+  ├ manage.py
+  └ otapick/
+      ├ crawlers    # スクレイピング・DOMパーサ
+      ├ db    # ブログクローラ・スコア計算・ORマッパー共通処理
+      ├ downloaders    # 画像・テキストDL
+      ├ extensions    # 拡張views・拡張serializers
+      ├ image    # 画像処理
+      ├ lib    # ユーティリティ・定数・URLパーサ
+      └ twitter    # ヲタピックTwitter bot
+```
+
+### frontend
+Reactを用いたSPAになります。バンドラにwebpack、コンパイラにBabel、静的構文解析にESLint、コードフォーマッタにPrettierを使用しています。一部のユーティリティ関数に対してテストコードを用意しています。また、Atomic Designに基づいたディレクトリ構成となっております。
+
+This is a SPA using React. It uses webpack as a bundler, Babel as a compiler, ESLint for static parsing, and Prettier as a code formatter. Test code is provided for some utility functions. Also, the directory structure is based on Atomic Design.
+```
+otapick/
+  └ frontend/
+      ├ src
+      │   ├ __test__/
+      │   ├ components/
+      │   │   ├ atoms/
+      │   │   ├ molecules/
+      │   │   ├ organisms/
+      │   │   ├ templates/
+      │   │   ├ pages/
+      │   │   ├ Screens.jsx
+      │   │   ├ settingsComponents/
+      │   │   ├ contexts/
+      │   │   └ modules/
+      │   ├ App.jsx
+      │   └ index.jsx
+      ├ package.json
+      ├ .babelrc
+      ├ webpack.config.js
+      ├ .eslintrc.js
+      └ .prettierrc.js
+```
+
+### other
+```
+otapick/
+  ├ design/    # ブランドロゴなどのアイコンのSVGファイルを配置
+  └ static/    # 静的ファイル. React(frontend)のバンドルファイルなどを配置
+```
+
+## :sunny:Demo environment build method
+まず、任意のディレクトリで本リポジトリをクローンします。
+
+First, clone this repository on any directory.
+```
+$ git clone https://github.com/kensan914/otapick-demo-environment.git
+$ cd otapick-demo-environment
 $ ls
-README.md      docker-compose.yml        mysql       nginx      python
+docker-compose.yml  init-migrate.sh  mysql/  nginx/  node/  python/  README.md
 ```
-Git clone otapick project to "src" directory.
+srcディレクトリにヲタピックリポジトリをクローンし、移動します。
+
+Clone and move the otapick repository to "src" directory.
 ```
 $ git clone https://github.com/kensan914/otapick.git src
 $ cd src
 ```
-Create ".env". If you are using 'Docker Toolbox', substitute 192.168.99.100 for ALLOWED_HOSTS 
+環境変数ファイルである「.env」を作成します。
+
+Create an environment variable file, ".env".
 ```
 $ vim .env
 ```
@@ -43,68 +119,63 @@ CLIENT_SSL_CERT_PATH=
 CLIENT_SSL_KEY_PATH=
 CLIENT_SSL_PASSWORD=
 ```
+コンテナをビルドし、立ち上げます。
 
 Build and up.
 ```
 $ cd ..
 $ docker-compose up -d --build
 ```
-Login to python container. And migrate.
+マイグレーションの初期化を行います。シェルスクリプトinit-migrate.shを実行します。実行環境がWindowsの場合、コマンドライン引数に"win"を指定して下さい。
+
+Initialize the migration. Execute the shellScript init-migrate.sh. If the execution environment is Windows, specify "win" as the command line argument.
 ```
-$ docker ps -a
-(check python container ID. If containers are not Up, "docker-compose up -d" again.)
-$ docker exec -it {python container ID} bash
+$ ./init-migrate.sh (if you are using Linux or MacOS)
+  or
+$ ./init-migrate.sh win (if you are using windows)
 ```
+otapick_demo_pythonコンテナ内でbashを実行します。以降、otapick_demo_pythonコンテナ内での作業になります。
+
+Run bash in the otapick_demo_python container. From now on, we will work inside the otapick_demo_python container.
 ```
-# cd otapick
-# python manage.py makemigrations
-# python manage.py migrate
-if you faild migrate,(https://dot-blog.jp/news/how-to-reset-django-migrations/)
+$ docker exec -it otapick_demo_python bash
 ```
-Create superuser.
+
+Create a super user to log in to the administration site. Both email address and password can be arbitrary.
 ```
-#python manage.py createsuperuser
-Username (leave blank to use 'root'): otapickAdmin
-Email address: otapick210@gmail.com
-Password: gin-TK46
+# python manage.py createsuperuser
+Email address: admin@gmail.com
+Password: admin
 Password (again): #again
 Superuser created successfully.
 ```
-Access [127.0.0.1:8000](http://127.0.0.1:8000/) in new window(Ctrl+click or Command+click)
 
-If you are using 'Docker Toolbox', you have to change nginx/conf.d/default.conf.
-Substitute 192.168.99.100 for server_name.
-```
-$ vim nginx/conf.d/default.conf
+管理サイトにアクセスします。新ウィンドウ(Ctrl+click or Command+click)で[127.0.0.1:9000/admin](http://127.0.0.1:9000/admin/)にアクセスして下さい。先ほど設定したメールアドレス・パスワードを入力し、ログインできれば成功です。
 
-server_name 127.0.0.1;
-#server_name 192.168.99.100;        #When using Docker Toolbox
-```
-Access [192.168.99.100:8000](http://192.168.99.100:8000/) in new window(Ctrl+click or Command+click)
+Access the administration site. Access [127.0.0.1:8000/admin](http://127.0.0.1:8000/admin/) in new window(Ctrl+click or Command+click). Enter the email address and password you set earlier, and if you can log in, you have succeeded.
 
-## :rainbow:Initialize DB
-以下、pythonコンテナにログイン済みで/var/www/otapick/配下であることを前提とする。
 
-まず、group,memberの登録を行う。
+## :low_brightness:Initialize DB
+DBにグループ・メンバー・ブログ情報の登録を行います。今回はあくまでデモなのでブログ情報に関しては各グループの直近20件のみ登録します。
+以下、otapick_demo_pythonコンテナ内の/var/www/otapick/配下であることを前提とします。
+
+まず、グループ・メンバー情報の登録を行います。
+
+Register the group, member, and blog information in the DB. Since this is just a demo, you will only register the last 20 blogs for each group.
+The following assumes that it is located in /var/www/otapick/ in the otapick_demo_python container.
+
+The first step is to register the group and member information.
 ```
 # python manage.py initDB
 ```
-~~blogの登録コマンドは2種類用意している。~~
 
-~~1つは、グループごとにblogを取得する。また、ページ指定もできる。グループを日向坂46、ページ数を1とした時、日向坂46各メンバー1ページずつ取得する。~~
-```
-# python manage.py bygroupBR
-```
-~~もう１つは、メンバーごとにblogを取得する。同様にページ指定ができる。~~
-```
-# python manage.py detailBR
-```
-blogの登録を行う際はkeepUpLatestコマンドのみ使えることとする。上の２つは厳密にはどちらもメンバー単位でクローリングしていく。そのため、他メンバー間の同時投稿されたブログの順番を把握できない。
-```
-# python manage.py keepUpLatest
-```
--g --group [int]　：groupIDでクローリング対象を指定。
+次にブログ情報の登録を行います。ブログ情報に関しては、公式ブログからに対してスクレイピングを行う関係で各リクエスト間で充分な待機時間を確保しているため、登録処理に1～2分程度要します。
 
--p --page [int]　：ページ数を指定。デフォルトで100。
+The next step is to register the blog information. As for the blog information, the registration process will take about 1 to 2 minutes because you have to wait long enough between each request to scrape the official blog.
+```
+# python manage.py getblog -p 2
+```
 
--a --all ：デフォルトで保存済のブログを発見次第処理を終了する仕様だが、allオプション指定でクローリングを続ける。初期設定の際は要指定(クローリング中に更新されずれが生じる可能性があるため)。
+必要な情報は揃いましたので、新ウィンドウ(Ctrl+click or Command+click)で[127.0.0.1:9000](http://127.0.0.1:9000)にアクセスして下さい。以下のように画像が表示されれば成功です。
+
+Now that you have all the information you need, Access [127.0.0.1:8000](http://127.0.0.1:8000) in new window(Ctrl+click or Command+click). If images are displayed as shown below, you have succeeded.
