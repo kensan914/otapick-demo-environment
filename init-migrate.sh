@@ -18,9 +18,6 @@ CMD_DOCKER_MYSQL="$CMD_PREFIX docker exec -i otapick_demo_db $CMD_MYSQL -u root 
 $CMD_DOCKER_MYSQL "$DROP_SQL"
 $CMD_DOCKER_MYSQL "$CREATE_SQL"
 
-SHOW_SQL="show databases;"
-$CMD_DOCKER_MYSQL "$SHOW_SQL"
-
 
 CMD_DOCKER_PYTHON="$CMD_PREFIX docker exec -it otapick_demo_python sh -c"
 $CMD_DOCKER_PYTHON "cd otapick && python manage.py showmigrations"

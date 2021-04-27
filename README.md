@@ -23,7 +23,7 @@ $ vim .env
 ```
 ```
 SECRET_KEY=ucj1y2hviu26_^lzxp0n=ct-qvcp%5w%aih6r=-!$znlm$g(#+
-DEBUG=False
+DEBUG=True
 ALLOWED_HOSTS=127.0.0.1
 
 DB_ENGINE=django.db.backends.mysql
