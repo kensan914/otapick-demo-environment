@@ -45,20 +45,21 @@ services:
     container_name: otapick_demo_python
     command: uwsgi --ini /var/www/uwsgi.ini
 
-  celery:
-    build: ./python
-    command: bash -c "./wait-for-it.sh db:3306 -- ./start-celery.sh"
-    links:
-      - python
-      - redis
-    depends_on:
-      - db
-    ports:
-      - "9002:9002"
-    tty: true
-    container_name: otapick_demo_celery
-
   redis:
     image: redis:5.0.7
     container_name: otapick_demo_redis
     tty: true
+
+  node:
+    build: 
+      context: .
+      dockerfile: ./node/Dockerfile
+    volumes:
+      - ./src/static:/var/www/otapick/static
+    ports:
+      - "3000:3000"
+    container_name: otapick_demo_node
+    environment:
+      - NODE_ENV=development
+    depends_on: 
+      - python
