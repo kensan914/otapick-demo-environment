@@ -15,7 +15,7 @@ PYTHON_CONTAINER_NAME="otapick_demo_python"
 
 CMD_DOCKER_MYSQL="$CMD_PREFIX docker exec -i $DB_CONTAINER_NAME $CMD_MYSQL -u root -pmysql-password -e"
 CMD_DOCKER_MYSQL_DB="$CMD_PREFIX docker exec -i $DB_CONTAINER_NAME $CMD_MYSQL -u root -pmysql-password $DB_NAME -e"
-$CMD_DOCKER_MYSQL_DB "SET foreign_key_checks = 0;" # all_authなどが"Cannot add foreign key constraint"エラーを起こすため
+# $CMD_DOCKER_MYSQL_DB "SET foreign_key_checks = 0;" # all_authなどが"Cannot add foreign key constraint"エラーを起こすため
 
 CMD_DOCKER_PYTHON="$CMD_PREFIX docker exec -it $PYTHON_CONTAINER_NAME sh -c"
 $CMD_DOCKER_PYTHON "cd otapick"

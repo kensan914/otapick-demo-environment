@@ -129,6 +129,7 @@ $ vim .env
 SECRET_KEY=ucj1y2hviu26_^lzxp0n=ct-qvcp%5w%aih6r=-!$znlm$g(#+
 DEBUG=True
 ALLOWED_HOSTS=127.0.0.1
+DEMO=True
 
 DB_ENGINE=django.db.backends.mysql
 DB_CONN_MAX_AGE=3600
@@ -142,12 +143,6 @@ DB_ATOMIC_REQUESTS=True
 REDIS_URL=redis://redis:6379
 
 MEDIA_ROOT=/var/www/otapick/media
-
-CLIENT_SSL_CERT_PATH=
-CLIENT_SSL_KEY_PATH=
-CLIENT_SSL_PASSWORD=
-
-SLACK_WEBHOOKS_OTAPICK_BOT_URL=
 ```
 
 コンテナをビルドし、立ち上げます。
@@ -202,7 +197,6 @@ Superuser created successfully.
 
 ![sdfasdfsdfsd](https://user-images.githubusercontent.com/52157596/119133105-7a8e8580-ba76-11eb-810b-4878c5fd9c0c.PNG)
 ![rtdfgdfg](https://user-images.githubusercontent.com/52157596/119133109-7bbfb280-ba76-11eb-8b4a-d3305f9c1761.PNG)
-
 
 <font color="dimgray">
 Access the administration site. Access [127.0.0.1:8000/admin](http://127.0.0.1:8000/admin/) in new window(Ctrl+click or Command+click). Enter the email address and password you set earlier, and if you can log in, you have succeeded.
