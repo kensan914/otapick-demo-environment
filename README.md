@@ -237,5 +237,7 @@ The next step is to register the blog information. As for the blog information, 
 <font color="dimgray">
 Now that you have all the information you need, Access
 
-[127.0.0.1:8000](http://127.0.0.1:8000) in new window(Ctrl+click or Command+click). If images are displayed as shown below, you have succeeded.
+[127.0.0.1:9000](http://127.0.0.1:9000) in new window(Ctrl+click or Command+click). If images are displayed as shown below, you have succeeded.
 </font>
+
+![dfagasdga](https://user-images.githubusercontent.com/52157596/119140545-3eabee00-ba7f-11eb-9c1a-6781608a62e2.PNG)
