@@ -35,15 +35,3 @@ done
 
 $CMD_DOCKER_PYTHON "cd otapick && python manage.py makemigrations"
 $CMD_DOCKER_PYTHON "cd otapick && python manage.py migrate"
-
-# APP_LIST=(
-#   "main"
-#   "image"
-#   "custom_account"
-#   "survey"
-# )
-# for app in "${APP_LIST[@]}"
-# do
-#   $CMD_DOCKER_PYTHON "cd otapick && python manage.py makemigrations $app"
-#   $CMD_DOCKER_PYTHON "cd otapick && python manage.py migrate $app"
-# done
