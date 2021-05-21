@@ -62,16 +62,17 @@ otapick/
   └ frontend/
       ├ src
       │   ├ __test__/
+      │   ├ pages/
+      │   ├ contexts/
+      │   ├ constants/
+      │   ├ hooks/
+      │   ├ static/
+      │   ├ utils/
       │   ├ components/
       │   │   ├ atoms/
       │   │   ├ molecules/
       │   │   ├ organisms/
-      │   │   ├ templates/
-      │   │   ├ pages/
-      │   │   ├ Screens.jsx
-      │   │   ├ settingsComponents/
-      │   │   ├ contexts/
-      │   │   └ modules/
+      │   │   └ templates/
       │   ├ App.jsx
       │   └ index.jsx
       ├ package.json
