@@ -1,10 +1,11 @@
 # :whale:otapick-demo-environment:whale2:
 
 ## :deciduous_tree:Description
-[ヲタピック](https://otapick.com)のローカル上のデモ環境をDocker(docker-compose)で提供し、本readmeではその構築方法を記します。
+
+[ヲタピック](https://otapick.com)のローカル上のデモ環境を Docker(docker-compose)で提供し、本 readme ではその構築方法を記します。
 
 デモ環境では最低限の機能のみ提供し、一部の機能(ユーザ認証等)に関してはセキュリティ上対応を見送っております。
-また、Windows HOMEのDocker toolboxをご使用されている環境では、127.0.0.1にアクセスできない関係で本構築方法は未対応となっております。ご理解の程よろしくお願いいたします。
+また、Windows HOME の Docker toolbox をご使用されている環境では、127.0.0.1 にアクセスできない関係で本構築方法は未対応となっております。ご理解の程よろしくお願いいたします。
 
 <font color="dimgray">
 A local demo environment of [otapick](https://otapick.com) is provided in Docker (docker-compose), and this readme describes how to build it.
@@ -13,6 +14,7 @@ In the demo environment, only the minimum functionality is provided, and some fu
 </font>
 
 ## :rainbow:Directory structure
+
 [ヲタピックのリポジトリ](https://github.com/kensan914/otapick)のディレクトリ構成を示します。
 
 <font color="dimgray">
@@ -20,12 +22,12 @@ The directory structure of [otapick repository](https://github.com/kensan914/ota
 </font>
 
 ### backend
-Django Rest Framework(DRF)を使用したWeb APIになります。
+
+Django Rest Framework(DRF)を使用した Web API になります。
 
 <font color="dimgray">
 This is a Web API using Django Rest Framework (DRF).
 </font>
-
 
 ```
 otapick/
@@ -48,12 +50,12 @@ otapick/
 ```
 
 ### frontend
-Reactを用いたSPAになります。バンドラにwebpack、コンパイラにBabel、静的構文解析にESLint、コードフォーマッタにPrettierを使用しています。一部のユーティリティ関数に対してテストコードを用意しています。また、Atomic Designに基づいたディレクトリ構成となっております。
+
+React を用いた SPA になります。バンドラに webpack、コンパイラに Babel、静的構文解析に ESLint、コードフォーマッタに Prettier を使用しています。一部のユーティリティ関数に対してテストコードを用意しています。また、Atomic Design に基づいたディレクトリ構成となっております。
 
 <font color="dimgray">
 This is a SPA using React. It uses webpack as a bundler, Babel as a compiler, ESLint for static parsing, and Prettier as a code formatter. Test code is provided for some utility functions. Also, the directory structure is based on Atomic Design.
 </font>
-
 
 ```
 otapick/
@@ -80,6 +82,7 @@ otapick/
 ```
 
 ### other
+
 ```
 otapick/
   ├ design/    # ブランドロゴなどのアイコンのSVGファイルを配置
@@ -87,12 +90,12 @@ otapick/
 ```
 
 ## :sunny:Demo environment build method
+
 まず、任意のディレクトリで本リポジトリをクローンします。
 
 <font color="dimgray">
 First, clone this repository on any directory.
 </font>
-
 
 ```
 $ git clone https://github.com/kensan914/otapick-demo-environment.git
@@ -100,27 +103,28 @@ $ cd otapick-demo-environment
 $ ls
 docker-compose.yml  init-migrate.sh  mysql/  nginx/  node/  python/  README.md
 ```
-srcディレクトリにヲタピックリポジトリをクローンし、移動します。
+
+src ディレクトリにヲタピックリポジトリをクローンし、移動します。
 
 <font color="dimgray">
 Clone and move the otapick repository to "src" directory.
 </font>
 
-
 ```
 $ git clone https://github.com/kensan914/otapick.git src
 $ cd src
 ```
+
 環境変数ファイルである「.env」を作成します。
 
 <font color="dimgray">
 Create an environment variable file, ".env".
 </font>
 
-
 ```
 $ vim .env
 ```
+
 ```
 SECRET_KEY=ucj1y2hviu26_^lzxp0n=ct-qvcp%5w%aih6r=-!$znlm$g(#+
 DEBUG=True
@@ -142,24 +146,26 @@ MEDIA_ROOT=/var/www/otapick/media
 CLIENT_SSL_CERT_PATH=
 CLIENT_SSL_KEY_PATH=
 CLIENT_SSL_PASSWORD=
+
+SLACK_WEBHOOKS_OTAPICK_BOT_URL=
 ```
+
 コンテナをビルドし、立ち上げます。
 
 <font color="dimgray">
 Build and up.
 </font>
 
-
 ```
 $ cd ..
 $ docker-compose up -d --build
 ```
-マイグレーションの初期化を行います。シェルスクリプトinit-migrate.shを実行します。実行環境がWindowsの場合、コマンドライン引数に"win"を指定して下さい。
+
+マイグレーションの初期化を行います。シェルスクリプト init-migrate.sh を実行します。実行環境が Windows の場合、コマンドライン引数に"win"を指定して下さい。
 
 <font color="dimgray">
 Initialize the migration. Execute the shellScript init-migrate.sh. If the execution environment is Windows, specify "win" as the command line argument.
 </font>
-
 
 ```
 $ ./init-migrate.sh (if you are using Linux or MacOS)
@@ -167,12 +173,11 @@ $ ./init-migrate.sh (if you are using Linux or MacOS)
 $ ./init-migrate.sh win (if you are using windows)
 ```
 
-otapick_demo_pythonコンテナ内でbashを実行します。以降、otapick_demo_pythonコンテナ内での作業になります。
+otapick_demo_python コンテナ内で bash を実行します。以降、otapick_demo_python コンテナ内での作業になります。
 
 <font color="dimgray">
 Run bash in the otapick_demo_python container. From now on, we will work inside the otapick_demo_python container.
 </font>
-
 
 ```
 $ docker exec -it otapick_demo_python bash
@@ -184,8 +189,8 @@ $ docker exec -it otapick_demo_python bash
 Create a super user to log in to the administration site. Both email address and password can be arbitrary.
 </font>
 
-
 ```
+# cd otapick
 # python manage.py createsuperuser
 Email address: admin@gmail.com
 Password: admin
@@ -200,8 +205,9 @@ Access the administration site. Access [127.0.0.1:8000/admin](http://127.0.0.1:8
 </font>
 
 ## :low_brightness:Initialize DB
-DBにグループ・メンバー・ブログ情報の登録を行います。今回はあくまでデモなのでブログ情報に関しては各グループの直近20件のみ登録します。
-以下、otapick_demo_pythonコンテナ内の/var/www/otapick/配下であることを前提とします。
+
+DB にグループ・メンバー・ブログ情報の登録を行います。今回はあくまでデモなのでブログ情報に関しては各グループの直近 20 件のみ登録します。
+以下、otapick_demo_python コンテナ内の/var/www/otapick/配下であることを前提とします。
 
 まず、グループ・メンバー情報の登録を行います。
 
@@ -212,17 +218,15 @@ The following assumes that it is located in /var/www/otapick/ in the otapick_dem
 The first step is to register the group and member information.
 </font>
 
-
 ```
 # python manage.py initDB
 ```
 
-次にブログ情報の登録を行います。ブログ情報に関しては、公式ブログからに対してスクレイピングを行う関係で各リクエスト間で充分な待機時間を確保しているため、登録処理に1～2分程度要します。
+次にブログ情報の登録を行います。ブログ情報に関しては、公式ブログからに対してスクレイピングを行う関係で各リクエスト間で充分な待機時間を確保しているため、登録処理に 1 ～ 2 分程度要します。
 
 <font color="dimgray">
 The next step is to register the blog information. As for the blog information, the registration process will take about 1 to 2 minutes because you have to wait long enough between each request to scrape the official blog.
 </font>
-
 
 ```
 # python manage.py getblog -p 2

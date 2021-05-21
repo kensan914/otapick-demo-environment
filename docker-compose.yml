@@ -1,4 +1,4 @@
-version: '3.5'
+version: "3.5"
 
 services:
   db:
@@ -6,11 +6,12 @@ services:
     volumes:
       - ./mysql/data:/var/lib/mysql
       - ./mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./mysql/pass.cnf:/var/www/conf.d/pass.cnf
     ports:
       - "3309:3306"
     environment:
       TZ: "Asia/Tokyo"
-      MYSQL_ROOT_PASSWORD: 'mysql-password'
+      MYSQL_ROOT_PASSWORD: "mysql-password"
       MYSQL_DATABASE: otapick_demo
     container_name: otapick_demo_db
 
@@ -51,7 +52,7 @@ services:
     tty: true
 
   node:
-    build: 
+    build:
       context: .
       dockerfile: ./node/Dockerfile
     volumes:
@@ -61,5 +62,5 @@ services:
     container_name: otapick_demo_node
     environment:
       - NODE_ENV=development
-    depends_on: 
+    depends_on:
       - python

@@ -45,3 +45,4 @@ uWSGI==2.0.19.1
 django-hosts==4.0
 django-admin-shortcuts==2.0.0
 tqdm==4.59.0
+jaconv==0.3

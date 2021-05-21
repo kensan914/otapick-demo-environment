@@ -9,11 +9,15 @@ fi
 
 
 CMD_MYSQL="mysql"
-CMD_DOCKER_MYSQL="$CMD_PREFIX docker exec -i otapick_db $CMD_MYSQL -u root -pmysql-password -e"
+DB_CONTAINER_NAME="otapick_demo_db"
+DB_NAME="otapick_demo"
+PYTHON_CONTAINER_NAME="otapick_demo_python"
 
-$CMD_DOCKER_MYSQL "SET foreign_key_checks = 0;" # all_authなどが"Cannot add foreign key constraint"エラーを起こすため
+CMD_DOCKER_MYSQL="$CMD_PREFIX docker exec -i $DB_CONTAINER_NAME $CMD_MYSQL -u root -pmysql-password -e"
+CMD_DOCKER_MYSQL_DB="$CMD_PREFIX docker exec -i $DB_CONTAINER_NAME $CMD_MYSQL -u root -pmysql-password $DB_NAME -e"
+$CMD_DOCKER_MYSQL_DB "SET foreign_key_checks = 0;" # all_authなどが"Cannot add foreign key constraint"エラーを起こすため
 
-CMD_DOCKER_PYTHON="$CMD_PREFIX docker exec -it otapick_python sh -c"
+CMD_DOCKER_PYTHON="$CMD_PREFIX docker exec -it $PYTHON_CONTAINER_NAME sh -c"
 $CMD_DOCKER_PYTHON "cd otapick"
 
 MIGRATION_PATH_ARRAY=(
@@ -31,3 +35,15 @@ done
 
 $CMD_DOCKER_PYTHON "cd otapick && python manage.py makemigrations"
 $CMD_DOCKER_PYTHON "cd otapick && python manage.py migrate"
+
+# APP_LIST=(
+#   "main"
+#   "image"
+#   "custom_account"
+#   "survey"
+# )
+# for app in "${APP_LIST[@]}"
+# do
+#   $CMD_DOCKER_PYTHON "cd otapick && python manage.py makemigrations $app"
+#   $CMD_DOCKER_PYTHON "cd otapick && python manage.py migrate $app"
+# done
