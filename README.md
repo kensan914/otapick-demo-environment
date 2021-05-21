@@ -195,14 +195,14 @@ Superuser created successfully.
 
 管理サイトにアクセスします。新ウィンドウ(Ctrl+click or Command+click)で[127.0.0.1:9000/admin](http://127.0.0.1:9000/admin/)にアクセスして下さい。先ほど設定したメールアドレス・パスワードを入力し、ログインできれば成功です。
 
-![sdfasdfsdfsd](https://user-images.githubusercontent.com/52157596/119133105-7a8e8580-ba76-11eb-810b-4878c5fd9c0c.PNG)
-![rtdfgdfg](https://user-images.githubusercontent.com/52157596/119133109-7bbfb280-ba76-11eb-8b4a-d3305f9c1761.PNG)
-
 <font color="dimgray">
 Access the administration site. Access
 
 [127.0.0.1:9000/admin](http://127.0.0.1:9000/admin/) in new window(Ctrl+click or Command+click). Enter the email address and password you set earlier, and if you can log in, you have succeeded.
 </font>
+
+![sdfasdfsdfsd](https://user-images.githubusercontent.com/52157596/119133105-7a8e8580-ba76-11eb-810b-4878c5fd9c0c.PNG)
+![rtdfgdfg](https://user-images.githubusercontent.com/52157596/119133109-7bbfb280-ba76-11eb-8b4a-d3305f9c1761.PNG)
 
 ## :low_brightness:Initialize DB
 
