@@ -199,7 +199,9 @@ Superuser created successfully.
 ![rtdfgdfg](https://user-images.githubusercontent.com/52157596/119133109-7bbfb280-ba76-11eb-8b4a-d3305f9c1761.PNG)
 
 <font color="dimgray">
-Access the administration site. Access [127.0.0.1:8000/admin](http://127.0.0.1:8000/admin/) in new window(Ctrl+click or Command+click). Enter the email address and password you set earlier, and if you can log in, you have succeeded.
+Access the administration site. Access
+
+[127.0.0.1:9000/admin](http://127.0.0.1:9000/admin/) in new window(Ctrl+click or Command+click). Enter the email address and password you set earlier, and if you can log in, you have succeeded.
 </font>
 
 ## :low_brightness:Initialize DB
@@ -233,5 +235,7 @@ The next step is to register the blog information. As for the blog information, 
 必要な情報は揃いましたので、新ウィンドウ(Ctrl+click or Command+click)で[127.0.0.1:9000](http://127.0.0.1:9000)にアクセスして下さい。以下のように画像が表示されれば成功です。
 
 <font color="dimgray">
-Now that you have all the information you need, Access [127.0.0.1:8000](http://127.0.0.1:8000) in new window(Ctrl+click or Command+click). If images are displayed as shown below, you have succeeded.
+Now that you have all the information you need, Access
+
+[127.0.0.1:8000](http://127.0.0.1:8000) in new window(Ctrl+click or Command+click). If images are displayed as shown below, you have succeeded.
 </font>

@@ -34,4 +34,16 @@ do
 done
 
 $CMD_DOCKER_PYTHON "cd otapick && python manage.py makemigrations"
+
+APP_LIST=(
+  "main"
+  "custom_account"
+  "image"
+  "survey"
+)
+for app in "${APP_LIST[@]}"
+do
+  $CMD_DOCKER_PYTHON "cd otapick && python manage.py makemigrations $app"
+done
+
 $CMD_DOCKER_PYTHON "cd otapick && python manage.py migrate"
